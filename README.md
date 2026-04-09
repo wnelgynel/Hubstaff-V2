@@ -19,7 +19,12 @@ npm install
 npm run dev
 ```
 
-Open the URL shown (e.g. `http://127.0.0.1:5173/`).
+Open the URL shown (e.g. `http://127.0.0.1:5173/` or `http://localhost:5173/`).
+
+### Blank page locally?
+
+1. **Start the server** — the UI only loads while `npm run dev` is running in a terminal.
+2. **Wrong base path** — if you ever set `DEPLOY_BASE` in your shell for a Pages build, unset it before dev: `unset DEPLOY_BASE` (then run `npm run dev` again). Local dev always uses `/` unless that variable is set.
 
 ## Build
 
