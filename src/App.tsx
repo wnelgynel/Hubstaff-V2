@@ -77,8 +77,9 @@ export default function App() {
                 take a break. For accurate time tracking and payment, keep your browser open while the
                 timer is running.{' '}
                 <span className="font-medium text-[#1f1f1f]">
-                  Time you track counts toward a shared daily pool for this project—everyone working
-                  today draws from the same limit, not an individual bucket alone.
+                  This project has a <strong className="font-semibold">daily hour limit</strong> shared by
+                  everyone working today—your time counts toward that pool so we stay within what the
+                  customer expects, not only a personal cap.
                 </span>
               </p>
             </div>
@@ -93,15 +94,16 @@ export default function App() {
             {show95 && <StatusBanner variant="urgent" />}
             {claimBlocked && (
               <Callout>
-                Today’s shared tasking pool for this project has been used up, so new tasks aren’t
-                available to claim right now. If you were already working on something, you can still
-                finish it and submit—check below for your session.
+                Today’s limit for this project has been reached, so new tasks aren’t available to claim.
+                If you were already in a session, you can still finish and submit—you’ll be paid for time
+                recorded up to when your timer stopped.
               </Callout>
             )}
             {view === 'returnVisit' && (
               <p className="text-base leading-normal text-[#636363]">
-                Welcome back. New tasks aren’t available at the moment, but anything you had in progress
-                is still here—your timer has stopped, and you can pick up where you left off to submit.
+                Welcome back. We’ve hit today’s project limit, so new tasks aren’t open—but your in-progress
+                work is still here, your timer has stopped, and you can submit to get paid for time up to
+                the freeze.
               </p>
             )}
 
@@ -126,9 +128,8 @@ export default function App() {
                   </p>
                   {frozen && (
                     <p className="max-w-[458px] text-center text-sm leading-relaxed text-[#636363]">
-                      The shared daily pool for this project has been reached, so your timer isn’t
-                      counting anymore. You can still submit this task—you’ll be paid for everything
-                      recorded up to when the timer stopped.
+                      This project’s daily limit has been reached, so your timer has stopped. You can still
+                      submit—you’ll see paid time in Outlier for everything recorded up to the freeze.
                     </p>
                   )}
                 </div>
@@ -166,7 +167,7 @@ export default function App() {
                   )}
                   {frozen && (
                     <p className="text-center text-xs text-[#636363]">
-                      You can still submit—pay uses the time saved up to when your timer stopped.
+                      Submit to finalize; pay matches your timesheet up to when the timer froze.
                     </p>
                   )}
                 </div>
@@ -291,7 +292,7 @@ function DesignContextFromThread() {
     <details className="mb-6 max-w-[1022px] rounded-xl border border-[#d9d9d9] bg-white/95 px-5 py-4 shadow-sm open:shadow-md">
       <summary className="cursor-pointer list-none text-sm font-semibold text-[#1f1f1f] [&::-webkit-details-marker]:hidden">
         <span className="mr-2 inline-block text-[#f7803c]">●</span>
-        Design context — why the shared daily limit UI exists (ops &amp; product thread)
+        Design context — Hubstaff / daily cap (ops, PRD, Mick · Calvin Apr 9)
       </summary>
       <div className="mt-4 space-y-4 border-t border-[#ececec] pt-4 text-sm leading-relaxed text-[#636363]">
         <p>
@@ -303,12 +304,12 @@ function DesignContextFromThread() {
           per-person limits.
         </p>
         <p>
-          <strong className="text-[#1f1f1f]">Product response.</strong> This screen pattern implements
-          a <strong className="font-semibold text-[#1f1f1f]">shared daily pool</strong>: all
-          contributors on the project draw from one limit for the day. When the pool is low or
-          exhausted, timers and claims stop in a controlled way—contributors see{' '}
-          <em>qualitative</em> messages only (no exact budget numbers), while the system enforces the
-          hard stop for pay accuracy.
+          <strong className="text-[#1f1f1f]">Product response.</strong> This pattern implements a{' '}
+          <strong className="font-semibold text-[#1f1f1f]">shared daily project limit</strong>: everyone’s
+          time rolls up to one cap. Staged warnings (~early / ~late), then at full capacity timers freeze
+          and pay reflects earned time in Outlier—aligned with PM direction to be{' '}
+          <em>straightforward</em> (&quot;this project has a limit&quot;) while keeping exact contract
+          numbers internal; legal/STO can refine wording.
         </p>
         <p>
           <strong className="text-[#1f1f1f]">Ops coordination (from thread).</strong> Teams reduced new
@@ -438,12 +439,14 @@ function StatusBanner({ variant }: { variant: 'info' | 'urgent' }) {
       }`}
     >
       <p className="font-semibold">
-        {isUrgent ? 'Almost there—please wrap up soon' : 'Heads up: shared time is getting tight'}
+        {isUrgent
+          ? 'Almost at today’s limit for this project'
+          : 'This project’s daily limit is filling up'}
       </p>
       <p className="mt-1 text-sm text-[#636363]">
         {isUrgent
-          ? 'We’re close to the end of today’s shared pool for this project—everyone’s time adds up to the same daily limit. Save your work, finish your current task if you can, and submit when you’re ready.'
-          : 'There’s still time in the shared pool today, but less headroom than earlier. If you have a long session open, consider finishing or pausing soon so nothing catches you off guard.'}
+          ? 'We’re very close to the daily cap for this project. Save your work, wrap up your current task if you can, and submit soon—once the limit is hit, timers will stop and you won’t accrue more time until the next cycle.'
+          : 'We’re approaching today’s cap for this project (early warning). There’s still time to work, but less headroom than earlier—if you’re in a long session, consider finishing or pausing so you’re not surprised as we get closer to the limit.'}
       </p>
     </div>
   )
@@ -499,7 +502,7 @@ function SampleToast({ onClose }: { onClose: () => void }) {
       role="status"
     >
       <div className="flex justify-between gap-3">
-        <p className="font-medium">Heads up: shared time is getting tight</p>
+        <p className="font-medium">This project’s daily limit is filling up</p>
         <button
           type="button"
           onClick={onClose}
@@ -510,7 +513,8 @@ function SampleToast({ onClose }: { onClose: () => void }) {
         </button>
       </div>
       <p className="mt-1 text-xs text-amber-900/90">
-        Same heads-up we send by email and in your inbox—shared pool for the project is getting low.
+        Same reminder we send by email and in your inbox—early heads-up before we reach the daily
+        project cap.
       </p>
     </div>
   )

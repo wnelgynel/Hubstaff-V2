@@ -4,6 +4,14 @@ Interactive preview for **shared daily project time** states on the Outlier-styl
 
 Stack: **React**, **TypeScript**, **Vite**, **Tailwind CSS v4**.
 
+## Live preview (after GitHub Pages deploy)
+
+If **GitHub Actions → Pages** is enabled for this repo, the latest `main` build is published at:
+
+**https://wnelgynel.github.io/Hubstaff-V2/**
+
+In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**. The workflow `.github/workflows/deploy-pages.yml` runs on every push to `main`.
+
 ## Run locally
 
 ```bash
